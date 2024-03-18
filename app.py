@@ -80,7 +80,7 @@ class Users(Resource):
     
     def get(self):
         user_list = []
-        for user in Article.query.all():
+        for user in User.query.all():
             user_list.append(user.to_dict())
         
         return make_response(user_list, 200)                

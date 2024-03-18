@@ -1,8 +1,8 @@
 """test
 
-Revision ID: 64a5c259d7ef
+Revision ID: 53a2323bafba
 Revises: 
-Create Date: 2024-03-17 21:33:00.696274
+Create Date: 2024-03-18 12:02:03.179307
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '64a5c259d7ef'
+revision = '53a2323bafba'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -62,11 +62,13 @@ def upgrade():
     )
     op.create_table('messages',
     sa.Column('text', sa.Text(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('chat_id', sa.Integer(), nullable=True),
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['chat_id'], ['chats.id'], name=op.f('fk_messages_chat_id_chats')),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_messages_user_id_users')),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('pieces',
