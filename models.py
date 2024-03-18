@@ -23,21 +23,23 @@ class User(DefaultBase):
     admin = db.Column(db.Boolean)
     
     articles = db.relationship('Article', backref='user', cascade='all, delete-orphan')
-    messages = db.relationship('Message', backref = 'user', cascade='all, delete-orphan')
+    messages = db.relationship('Message', backref='user', cascade='all, delete-orphan')
     
     artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
 
-    chats = association_proxy('messages', 'chat')
+    chats = association_proxy('messages', 'chats')
 
     @validates('password')
     def validate_password (self, key, password):
         if(4 > len(password) > 35):
             raise ValueError('Password must be between 5 and 34 characters long.')
+        return password
         
     @validates('username')
     def validate_username (self, key, username):
         if(4 > len(username) > 16):
             raise ValueError('Username must be between 5 and 15 characters long.')
+        return username
         
     @hybrid_property
     def password(self):
@@ -86,8 +88,7 @@ class Message(DefaultBase):
     __tablename__ = 'messages'
 
     text = db.Column(db.Text, nullable=False)
-
-    users = association_proxy('chats', 'user')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     chat_id = db.Column(db.Integer, db.ForeignKey('chats.id'))
 
 class Chat(DefaultBase):

@@ -10,7 +10,7 @@ from sqlalchemy.exc import IntegrityError
 
 # Local imports
 from config import app, db, api
-from models import Artist, Piece, Article, User, Message, DefaultBase
+from models import Artist, Piece, Article, User, Message, Chat, DefaultBase
 # from models import User, Task, List, DefaultBase
 
 app.secret_key = 'dkdfkSKDGSDFGdfkvnia;vDAKCni1dkf65kjlfgFJl6kgGsdh4dfgk1fjD3gdKDJ'
