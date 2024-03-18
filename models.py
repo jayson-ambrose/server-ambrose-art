@@ -24,6 +24,8 @@ class User(DefaultBase):
     
     articles = db.relationship('Article', backref='user', cascade='all, delete-orphan')
     messages = db.relationship('Message', backref='user', cascade='all, delete-orphan')
+
+    artist = db.relationship('Artist', back_populates='user')
     
     # artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
 
@@ -63,6 +65,8 @@ class Artist(DefaultBase):
     pieces = db.relationship('Piece', backref='artist', cascade='all, delete-orphan')
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', back_populates='artist')
+
 
 class Piece(DefaultBase):
     __tablename__ = 'pieces'
