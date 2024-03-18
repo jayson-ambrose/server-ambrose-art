@@ -25,7 +25,7 @@ class User(DefaultBase):
     articles = db.relationship('Article', backref='user', cascade='all, delete-orphan')
     messages = db.relationship('Message', backref='user', cascade='all, delete-orphan')
     
-    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
+    # artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
 
     chats = association_proxy('messages', 'chats')
 

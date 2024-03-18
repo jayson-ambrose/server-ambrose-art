@@ -26,9 +26,9 @@ if __name__ == '__main__':
         print('--OLD DATA DELETED--')
         print('--GENERATING USERS--')
 
-        u1 = User(id=1, username='jambrose', password='password', admin=True, artist_id=None)
-        u2 = User(id=2, username='msmith', password='password', admin=True, artist_id=1)
-        u3 = User(id=3, username='rambrose', password='password', admin=True, artist_id=2)
+        u1 = User(id=1, username='jambrose', password='password', admin=True)
+        u2 = User(id=2, username='msmith', password='password', admin=True)
+        u3 = User(id=3, username='rambrose', password='password', admin=True)
 
         user_list = [u1, u2, u3]
 
