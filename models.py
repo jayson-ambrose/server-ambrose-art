@@ -16,15 +16,18 @@ class DefaultBase(db.Model, SerializerMixin):
         return f'<Instance of {self.__class__.__name__}, ID: {self.id}>'
     
 class User(DefaultBase):
+    __tablename__ = 'users'
 
     username = db.Column(db.String, unique=True, nullable=False)
     _password = db.Column(db.String, nullable=False)
     admin = db.Column(db.Boolean)
     
-    articles = db.relationship('Piece', backref='user', cascade='all, delete-orphan')
+    articles = db.relationship('Article', backref='user', cascade='all, delete-orphan')
     messages = db.relationship('Message', backref = 'user', cascade='all, delete-orphan')
     
-    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'))
+    artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
+
+    chats = association_proxy('messages', 'chat')
 
     @validates('password')
     def validate_password (self, key, password):
@@ -43,7 +46,7 @@ class User(DefaultBase):
     @password.setter
     def password(self, password):
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        self._password = password.hash
+        self._password = password_hash
 
     def auth(self, password):
         return bcrypt.check_password_hash(self.password, password)
@@ -53,10 +56,11 @@ class Artist(DefaultBase):
 
     name = db.Column(db.String, nullable=False)
     bio = db.Column(db.Text)
+    img_url = db.Column(db.String)
 
     pieces = db.relationship('Piece', backref='artist', cascade='all, delete-orphan')
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 class Piece(DefaultBase):
     __tablename__ = 'pieces'
@@ -83,8 +87,19 @@ class Message(DefaultBase):
 
     text = db.Column(db.Text, nullable=False)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    users = association_proxy('chats', 'user')
+    chat_id = db.Column(db.Integer, db.ForeignKey('chats.id'))
+
+class Chat(DefaultBase):
+    __tablename__ = 'chats'
+
+    messages = db.relationship('Message', backref='chat', cascade='all, delete-orphan')
+
+    users = association_proxy('messages', 'user')
+
+
+
+
 
 
 

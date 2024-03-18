@@ -74,15 +74,25 @@ class Articles(Resource):
         for article in Article.query.all():
             article_list.append(article.to_dict())
         
-        return make_response(article_list, 200)            
+        return make_response(article_list, 200)
+
+class Users(Resource):
+    
+    def get(self):
+        user_list = []
+        for user in Article.query.all():
+            user_list.append(user.to_dict())
+        
+        return make_response(user_list, 200)                
 
 # Views        
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CheckSession, '/checksession')
-api.add_resource(Artist, '/artists')
+api.add_resource(Artists, '/artists')
 api.add_resource(Pieces, '/pieces')
 api.add_resource(Articles, '/articles')
+api.add_resource(Users, '/users')
 
 
 if __name__ == '__main__':
