@@ -18,6 +18,8 @@ class DefaultBase(db.Model, SerializerMixin):
 class User(DefaultBase):
     __tablename__ = 'users'
 
+    serialize_rules = ('-artist.user',)
+
     username = db.Column(db.String, unique=True, nullable=False)
     _password = db.Column(db.String, nullable=False)
     admin = db.Column(db.Boolean)
@@ -25,9 +27,7 @@ class User(DefaultBase):
     articles = db.relationship('Article', backref='user', cascade='all, delete-orphan')
     messages = db.relationship('Message', backref='user', cascade='all, delete-orphan')
 
-    artist = db.relationship('Artist', back_populates='user')
-    
-    # artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
+    artist = db.relationship('Artist', back_populates='user', uselist=False)
 
     chats = association_proxy('messages', 'chats')
 
@@ -57,6 +57,8 @@ class User(DefaultBase):
     
 class Artist(DefaultBase):
     __tablename__ = 'artists'
+
+    serialize_rules = ('-user.artist',)
 
     name = db.Column(db.String, nullable=False)
     bio = db.Column(db.Text)
