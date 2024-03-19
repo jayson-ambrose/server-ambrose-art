@@ -76,6 +76,8 @@ class Piece(DefaultBase):
     title = db.Column(db.String, unique=True, nullable=False)
     img_url = db.Column(db.String)
     price = db.Column(db.Integer)
+    category = db.Column(db.String)
+    sold = db.Column(db.Boolean)
 
     artist_id = db.Column(db.Integer, db.ForeignKey('artists.id'))
 
@@ -83,6 +85,7 @@ class Article(DefaultBase):
     __tablename__ = 'articles'
 
     title = db.Column(db.String, nullable=False)
+    text = db.Column(db.Text, nullable=False)
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)  
     archived = db.Column(db.Boolean)
