@@ -18,7 +18,7 @@ class DefaultBase(db.Model, SerializerMixin):
 class User(DefaultBase):
     __tablename__ = 'users'
 
-    serialize_rules = ('-artist.user',)
+    serialize_rules = ('-artist.user', '-articles.user')
 
     username = db.Column(db.String, unique=True, nullable=False)
     _password = db.Column(db.String, nullable=False)
@@ -58,7 +58,7 @@ class User(DefaultBase):
 class Artist(DefaultBase):
     __tablename__ = 'artists'
 
-    serialize_rules = ('-user.artist',)
+    serialize_rules = ('-user', '-pieces.artist')
 
     name = db.Column(db.String, nullable=False)
     bio = db.Column(db.Text)
@@ -72,6 +72,8 @@ class Artist(DefaultBase):
 
 class Piece(DefaultBase):
     __tablename__ = 'pieces'
+
+    serialize_rules = ('-artist.pieces', '-artist.user')
 
     title = db.Column(db.String, unique=True, nullable=False)
     img_url = db.Column(db.String)
