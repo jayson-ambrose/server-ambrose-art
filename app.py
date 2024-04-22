@@ -21,15 +21,12 @@ class Login(Resource):
         req_data = request.get_json()
         user = User.query.filter(User.username == req_data['username']).first()
 
-        print(user)
-
         try:
             if user.auth(req_data['password']) == False:
                 return make_response({'error': 'wrong password enterred'}, 401)
             
             session['user_id'] = user.id
-
-            make_response(user.to_dict(), 200)
+            return make_response(user.to_dict(rules=('-_password',)), 200)
         
         except:
             return make_response({'error':'login error'})
