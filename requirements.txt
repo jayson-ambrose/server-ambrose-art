@@ -1,3 +1,9 @@
 Flask
 Gunicorn
 flask-restful
+flask-migrate
+sqlalchemy
+sqlalchemy-serializer
+flask-cors
+flask-bcrypt
+flask-session
