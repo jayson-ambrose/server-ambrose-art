@@ -21,6 +21,8 @@ class Login(Resource):
         req_data = request.get_json()
         user = User.query.filter(User.username == req_data['username']).first()
 
+        print(user)
+
         try:
             if user.auth(req_data['password']) == False:
                 return make_response({'error': 'wrong password enterred'}, 401)
