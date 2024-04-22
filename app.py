@@ -20,8 +20,13 @@ class Login(Resource):
     def post(self):
         req_data = request.get_json()
         user = User.query.filter(User.username == req_data['username']).first()
+        
+        if not user:
+            print('no user')
+            return make_response({'error':'login error'}, 401)
 
         try:
+            print(user.auth(req_data['password']))
             if user.auth(req_data['password']) == False:
                 return make_response({'error': 'wrong password enterred'}, 401)
             
@@ -29,7 +34,7 @@ class Login(Resource):
             return make_response(user.to_dict(rules=('-_password',)), 200)
         
         except:
-            return make_response({'error':'login error'})
+            return make_response({'error':'login error'}, 401)
         
 class Logout(Resource):
 
