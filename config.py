@@ -13,7 +13,7 @@ from flask_session import Session
 
 # Instantiate app, set attributes
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jayson:4ppTvl9UfdAwcsIJVxcRvJ7hZ8IM6VsH@dpg-cohjf3djm4es739a265g-a/galleryapp'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_PERMANENT'] = False
