@@ -26,7 +26,6 @@ class Login(Resource):
             return make_response({'error':'login error'}, 401)
 
         try:
-            print(user.auth(req_data['password']))
             if user.auth(req_data['password']) == False:
                 return make_response({'error': 'wrong password enterred'}, 401)
             
@@ -46,10 +45,11 @@ class CheckSession(Resource):
 
     def get(self):
         
-        artist = Artist.query.filter(Artist.id == session.get('user_id')).first()
+        user = User.query.filter(User.id == session.get('user_id')).one_or_none()
+        print(user)
 
-        if artist:
-            return make_response(artist.to_dict(), 200)
+        if user:
+            return make_response(user.to_dict(rules=('-_password',)), 200)
         else:
             return make_response({'error':'session not found'}, 401)
         
