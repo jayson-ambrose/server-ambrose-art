@@ -30,6 +30,7 @@ class Login(Resource):
                 return make_response({'error': 'wrong password enterred'}, 401)
             
             session['user_id'] = user.id
+            print (session)
             return make_response(user.to_dict(rules=('-_password',)), 200)
         
         except:
