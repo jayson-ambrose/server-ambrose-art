@@ -46,7 +46,7 @@ class CheckSession(Resource):
 
     def get(self):
         
-        user = User.query.filter(User.id == session.get('user_id')).one_or_none()
+        user = User.query.filter(User.id == session['user_id']).one_or_none()
         print(user)
 
         if user:
