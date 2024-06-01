@@ -13,6 +13,9 @@ flask-cors = "*"
 flask-bcrypt = "*"
 faker = "*"
 flask-session = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
+python_dotenv = '*'
 
 [dev-packages]
 
