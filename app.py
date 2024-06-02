@@ -45,7 +45,7 @@ class Login(Resource):
 class Logout(Resource):
 
     def delete(self):
-        session['user_id'] = None
+        session.clear()
         return make_response({}, 204)
     
 class CheckSession(Resource):
