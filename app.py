@@ -5,6 +5,7 @@ from datetime import date
 
 # Remote library imports
 from flask import request, make_response, session
+from flask_cors import cross_origin
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
@@ -17,6 +18,7 @@ app.secret_key = 'dkdfkSKDGSDFGdfkvnia;vDAKCni1dkf65kjlfgFJl6kgGsdh4dfgk1fjD3gdK
 
 class Login(Resource):
 
+    # @cross_origin(methods=['POST'], supports_credentials=True, headers=['Content-Type'], origin='http://127.0.0.1:5173')
     def post(self):
         req_data = request.get_json()
         user = User.query.filter(User.username == req_data['username']).first()
@@ -31,7 +33,11 @@ class Login(Resource):
             
             session['user_id'] = user.id
             print (session)
-            return make_response(user.to_dict(rules=('-_password',)), 200)
+
+            response = make_response(user.to_dict(rules=('-password',)), 200)
+            # response.set_cookie('access_cookie', value=app.secret_key, domain='http://localhost')
+
+            return response
         
         except:
             return make_response({'error':'login error'}, 401)

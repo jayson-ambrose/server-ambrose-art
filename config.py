@@ -35,11 +35,11 @@ db.init_app(app)
 api = Api(app)
 
 # Instantiate CORS
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # Instantiate BCrypt
 bcrypt = Bcrypt(app)
 
-# Instantiate Session?
+# # Instantiate Session?
 # flasksession = Session(app)
 # flasksession.init_app(app)
