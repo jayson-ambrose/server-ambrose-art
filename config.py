@@ -35,7 +35,7 @@ db.init_app(app)
 api = Api(app)
 
 # Instantiate CORS
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, origins=['server-ambrose-art.onrender.com', 'https://www.ambrosearts.com/'])
 
 # Instantiate BCrypt
 bcrypt = Bcrypt(app)
