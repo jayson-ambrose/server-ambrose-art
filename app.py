@@ -35,7 +35,7 @@ class Login(Resource):
             print (session)
 
             response = make_response(user.to_dict(rules=('-password',)), 200)
-            # response.set_cookie('access_cookie', value=app.secret_key, domain='http://localhost')
+            response.set_cookie('access_cookie', value=app.secret_key, domain='https://www.ambrosearts.com/')
 
             return response
         
